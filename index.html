@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Algoritma Pemrograman: Fase E Kelas X SMK</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef3fb;--panel:#fff;--ink:#14213d;--muted:#51607f;--teal:#0f9d8a;--amber:#f2b134;--coral:#e4572e;--line:#cfd9ec;--code:#1b2a4a}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1830;--panel:#18264a;--ink:#eef3fb;--muted:#a9b6d3;--line:#2c3d6b;--code:#0a1226}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-size:clamp(16px,1.6vw,21px);line-height:1.5;overflow:hidden}
+#bar{position:fixed;top:0;left:0;height:6px;background:var(--teal);width:0;transition:width .3s;z-index:5}
+.slide{display:none;height:100%;overflow-y:auto;padding:48px 28px 96px;align-items:center;justify-content:center}
+.slide.on{display:flex}
+.wrap{width:100%;max-width:980px;margin:auto}
+h1{font-size:clamp(34px,6vw,68px);line-height:1.05;margin:0 0 16px;font-weight:900}
+h2{font-size:clamp(26px,3.6vw,42px);line-height:1.15;margin:0 0 18px;font-weight:900}
+h3{margin:0 0 8px;font-size:1.1em}
+p{margin:0 0 12px}
+.tag{display:inline-block;background:var(--amber);color:#14213d;font-weight:900;padding:4px 14px;border-radius:99px;font-size:.8em;margin-bottom:14px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:16px 18px}
+.card.flip{cursor:pointer;min-height:110px}
+.card.flip small{color:var(--muted)}
+.card.flip .back{display:none}
+.card.flip.open .back{display:block}.card.flip.open .front{display:none}
+pre,code{font-family:"Fira Code",monospace}
+pre{background:var(--code);color:#e9f0ff;border-radius:12px;padding:16px;overflow-x:auto;font-size:.78em;line-height:1.6;margin:0 0 12px}
+code{background:var(--line);padding:1px 6px;border-radius:6px;font-size:.88em}
+pre code{background:none;padding:0}
+.k{color:#7fd8c8}.s{color:#f6c768}.c{color:#8fa1c7}
+table{border-collapse:collapse;width:100%;background:var(--panel);border-radius:12px;overflow:hidden;font-size:.92em}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:left}th{background:var(--ink);color:var(--bg)}
+button{font:inherit;font-weight:700;border:2px solid var(--teal);background:var(--teal);color:#fff;border-radius:10px;padding:8px 18px;cursor:pointer}
+button.ghost{background:transparent;color:var(--teal)}
+button:focus-visible,select:focus-visible,.card.flip:focus-visible,.line:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+select{font:inherit;padding:7px 10px;border-radius:10px;border:2px solid var(--line);background:var(--panel);color:var(--ink)}
+#boxes{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.box{width:clamp(38px,6vw,56px);height:clamp(38px,6vw,56px);display:grid;place-items:center;border-radius:10px;background:var(--panel);border:2px solid var(--line);font-weight:700;transition:.2s}
+.box.out{opacity:.25}.box.cur{background:var(--amber);color:#14213d;border-color:var(--amber);transform:translateY(-6px)}
+.box.hit{background:var(--teal);color:#fff;border-color:var(--teal)}
+#count{font-weight:900;font-size:1.2em}
+.line{display:block;width:100%;text-align:left;background:none;border:2px solid transparent;color:#e9f0ff;font:inherit;font-size:1em;padding:2px 8px;border-radius:6px;cursor:pointer}
+.line:hover{background:#ffffff18}.line.found{background:#0f9d8a55;border-color:var(--teal)}.line.miss{background:#e4572e55;border-color:var(--coral)}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;background:var(--panel);color:var(--ink);border:2px solid var(--line)}
+.opt.ok{background:var(--teal);color:#fff;border-color:var(--teal)}.opt.no{background:var(--coral);color:#fff;border-color:var(--coral)}
+.note{border-left:6px solid var(--teal);background:var(--panel);padding:10px 16px;border-radius:0 12px 12px 0}
+#nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:var(--bg);border-top:2px solid var(--line);z-index:5}
+#nav span{color:var(--muted);font-weight:700}
+.big{font-size:clamp(64px,12vw,130px);font-weight:900;line-height:1;color:var(--teal)}
+.two{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start}.two pre{margin:0}.cap{margin:16px 0 6px;font-weight:900}
+.res{background:#07101f;color:#9ff0c9;margin:8px 0 12px}.res::before{content:"Keluaran:\A";color:#8fa1c7;font-family:Nunito,sans-serif}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<!-- Sampul -->
+<section class="slide on"><div class="wrap">
+<span class="tag">Koding dan Kecerdasan Artifisial · Fase E · Kelas X SMK</span>
+<h1>Algoritma Pemrograman: membandingkan, menulis, memperbaiki</h1>
+<p>Tiga pertemuan untuk membuat aplikasi teks sederhana yang benar dan efisien.</p>
+<div class="grid">
+<div class="card"><h3>Pertemuan 1</h3>Perbandingan algoritma</div>
+<div class="card"><h3>Pertemuan 2</h3>Pemrograman berbasis teks</div>
+<div class="card"><h3>Pertemuan 3</h3>Debugging</div>
+<div class="card"><h3>Penutup</h3>Kuis 9 soal</div>
+</div>
+<pre data-out="Halo, calon programmer!"><code>print("Halo, calon programmer!")</code></pre><p style="margin-top:18px;color:var(--muted)">Gunakan tombol panah di keyboard atau tombol di bawah layar.</p>
+</div></section>
+
+<!-- Tujuan -->
+<section class="slide"><div class="wrap">
+<h2>Setelah belajar, kamu mampu…</h2>
+<div class="grid">
+<div class="card"><h3>Membandingkan</h3>dua algoritma untuk masalah yang sama, lalu memilih yang lebih efisien.</div>
+<div class="card"><h3>Menulis</h3>program Python dengan input, percabangan, perulangan, list, dan fungsi.</div>
+<div class="card"><h3>Memperbaiki</h3>bug sintaks, runtime, dan logika dengan langkah yang sistematis.</div>
+<div class="card"><h3>Menghasilkan</h3>aplikasi teks yang sesuai dengan jurusanmu.</div>
+</div><h3 class="cap">Contoh kode: fungsi sederhana</h3><pre data-out="Halo, Dina"><code>def sapa(nama):
+    return "Halo, " + nama
+
+print(sapa("Dina"))</code></pre></div></section>
+
+<section class="slide"><div class="wrap"><span class="tag">Bekal Python</span><h2>Belum pernah ngoding? Mulai dari sini</h2><p>Delapan slide berikut memperkenalkan dasar Python, dari <b>variabel</b> sampai <b>fungsi</b>. Setiap contoh punya tombol <b>Lihat keluaran</b>: tebak dulu hasilnya, baru ketuk tombolnya.</p><div class="note">Urutan belajar: sintaks, variabel, operator, input, percabangan, perulangan, list, fungsi.</div></div></section>
+
+<section class="slide"><div class="wrap"><span class="tag">Bekal Python 1 dari 8</span><h2>Program pertama dan aturan sintaks</h2><div class="two"><div><pre data-out="Halo, dunia!&#10;Saya belajar Python"><code>print("Halo, dunia!")
+print("Saya belajar Python")  # ini komentar</code></pre></div><div class="grid" style="grid-template-columns:1fr"><div class="card"><h3>Sintaks</h3>Aturan penulisan yang harus diikuti persis seperti bahasa.</div><div class="card"><h3>Aturan penting</h3>Huruf besar dan kecil dibedakan (<code>print</code> bukan <code>Print</code>). Tanda kutip harus berpasangan. Komentar diawali <code>#</code>.</div></div></div></div></section>
+
+<section class="slide"><div class="wrap"><span class="tag">Bekal Python 2 dari 8</span><h2>Variabel dan tipe data</h2><p>Variabel itu seperti kotak berlabel: nama kotak di kiri, isinya di kanan.</p><div class="two"><div><pre data-out="Sari 16 1.62 True&#10;&lt;class &#x27;int&#x27;&gt;"><code>nama = "Sari"
+umur = 16
+tinggi = 1.62
+lulus = True
+print(nama, umur, tinggi, lulus)
+print(type(umur))</code></pre></div><div><table><tr><th>Tipe</th><th>Isi</th><th>Contoh</th></tr><tr><td>str</td><td>teks</td><td>"Sari"</td></tr><tr><td>int</td><td>bilangan bulat</td><td>16</td></tr><tr><td>float</td><td>bilangan desimal</td><td>1.62</td></tr><tr><td>bool</td><td>benar/salah</td><td>True</td></tr></table></div></div></div></section>
+
+<section class="slide"><div class="wrap"><span class="tag">Bekal Python 3 dari 8</span><h2>Operator: menghitung dengan kode</h2><div class="two"><div><pre data-out="22&#10;12&#10;85&#10;3.4&#10;3&#10;2&#10;289"><code>a = 17
+b = 5
+print(a + b)    # tambah
+print(a - b)    # kurang
+print(a * b)    # kali
+print(a / b)    # bagi
+print(a // b)   # bagi bulat
+print(a % b)    # sisa bagi
+print(a ** 2)   # pangkat</code></pre></div><div class="note">Operator <code>%</code> (sisa bagi) berguna untuk mengecek bilangan genap: <code>x % 2 == 0</code>. Operator <code>==</code> membandingkan, sedangkan <code>=</code> mengisi variabel.</div></div></div></section>
+
+<section class="slide"><div class="wrap"><span class="tag">Bekal Python 4 dari 8</span><h2>Input dari pengguna</h2><pre data-out="Nama: Budi&#10;Tahun lahir: 2010&#10;Halo Budi umurmu 16"><code>nama = input("Nama: ")
+tahun = int(input("Tahun lahir: "))
+umur = 2026 - tahun
+print("Halo", nama, "umurmu", umur)</code></pre><div class="note"><code>input()</code> selalu menghasilkan teks. Ubah ke angka dengan <code>int()</code> (bulat) atau <code>float()</code> (desimal) sebelum dihitung.</div></div></section>
+
+<section class="slide"><div class="wrap"><span class="tag">Bekal Python 5 dari 8</span><h2>Percabangan: mengambil keputusan</h2><div class="two"><div><pre data-out="B"><code>nilai = 78
+if nilai &gt;= 90:
+    print("A")
+elif nilai &gt;= 75:
+    print("B")
+else:
+    print("Remedial")</code></pre></div><div class="grid" style="grid-template-columns:1fr"><div class="card"><h3>Pembanding</h3><code>==</code> sama dengan, <code>!=</code> tidak sama, <code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></div><div class="card"><h3>Indentasi</h3>Baris yang menjorok 4 spasi adalah isi dari <code>if</code>. Jangan lupa tanda <code>:</code> di akhir baris.</div></div></div></div></section>
+
+<section class="slide"><div class="wrap"><span class="tag">Bekal Python 6 dari 8</span><h2>Perulangan: mengulang tanpa mengetik ulang</h2><div class="two"><div><pre data-out="Angka 1&#10;Angka 2&#10;Angka 3&#10;Angka 4&#10;Angka 5"><code>for i in range(1, 6):
+    print("Angka", i)</code></pre></div><div><pre data-out="Sisa 60&#10;Sisa 20&#10;Sisa -20"><code>saldo = 100
+while saldo &gt; 0:
+    saldo = saldo - 40
+    print("Sisa", saldo)</code></pre></div></div><div class="note"><code>for</code> dipakai saat jumlah pengulangan diketahui. <code>range(1, 6)</code> menghasilkan 1 sampai 5. <code>while</code> mengulang selama syaratnya benar.</div></div></section>
+
+<section class="slide"><div class="wrap"><span class="tag">Bekal Python 7 dari 8</span><h2>List: banyak data dalam satu variabel</h2><div class="two"><div><pre data-out="80&#10;4&#10;80&#10;75&#10;90&#10;85&#10;82.5"><code>nilai = [80, 75, 90]
+nilai.append(85)
+print(nilai[0])
+print(len(nilai))
+for n in nilai:
+    print(n)
+print(sum(nilai) / len(nilai))</code></pre></div><div class="note">Nomor urut (indeks) dimulai dari <b>0</b>, jadi <code>nilai[0]</code> adalah data pertama. <code>append</code> menambah data di akhir, <code>len</code> menghitung banyak data, <code>sum</code> menjumlahkan.</div></div></div></section>
+
+<section class="slide"><div class="wrap"><span class="tag">Bekal Python 8 dari 8</span><h2>Fungsi: kode yang bisa dipakai berulang</h2><div class="two"><div><pre data-out="25&#10;64"><code>def luas_persegi(sisi):
+    return sisi * sisi
+
+hasil = luas_persegi(5)
+print(hasil)
+print(luas_persegi(8))</code></pre></div><div class="grid" style="grid-template-columns:1fr"><div class="card"><h3>Bagian fungsi</h3><code>def</code> membuat fungsi, <code>sisi</code> adalah parameter (bahan masukan), <code>return</code> mengembalikan hasil.</div><div class="card"><h3>Mengapa dipakai</h3>Tulis sekali, panggil berkali-kali. Program lebih rapi dan lebih mudah diperbaiki.</div></div></div></div></section>
+
+<!-- P1 pemantik -->
+<section class="slide"><div class="wrap">
+<span class="tag">Pertemuan 1</span>
+<h2>1.000 buku, 1 kode buku. Bagaimana cara tercepat menemukannya?</h2>
+<p>Satu masalah bisa diselesaikan dengan banyak algoritma. Kita menilainya dengan empat ukuran:</p>
+<div class="grid">
+<div class="card flip" tabindex="0"><div class="front"><h3>Kebenaran</h3><small>ketuk untuk detail</small></div><div class="back">Apakah hasilnya selalu benar untuk semua data?</div></div>
+<div class="card flip" tabindex="0"><div class="front"><h3>Waktu</h3><small>ketuk untuk detail</small></div><div class="back">Berapa langkah yang dibutuhkan saat data bertambah banyak?</div></div>
+<div class="card flip" tabindex="0"><div class="front"><h3>Memori</h3><small>ketuk untuk detail</small></div><div class="back">Berapa banyak ruang penyimpanan yang dipakai?</div></div>
+<div class="card flip" tabindex="0"><div class="front"><h3>Keterbacaan</h3><small>ketuk untuk detail</small></div><div class="back">Apakah mudah dipahami dan diubah oleh orang lain?</div></div>
+</div><h3 class="cap">Contoh kode: mencari satu per satu</h3><pre data-out="Periksa B01&#10;Periksa B02&#10;Periksa B03&#10;Ketemu!"><code>kode_buku = ["B01", "B02", "B03", "B04"]
+cari = "B03"
+for kode in kode_buku:
+    print("Periksa", kode)
+    if kode == cari:
+        print("Ketemu!")
+        break</code></pre></div></section>
+
+<!-- P1 demo -->
+<section class="slide"><div class="wrap">
+<span class="tag">Coba sendiri</span>
+<h2>Linear search lawan binary search</h2>
+<p><b>Linear</b>: periksa satu per satu. <b>Biner</b>: bagi dua area pencarian (data harus terurut).</p>
+<label>Cari angka: <select id="target"></select></label>
+<button id="runLin">Jalankan linear</button> <button id="runBin" class="ghost">Jalankan biner</button>
+<div id="boxes" aria-live="polite"></div>
+<p>Jumlah langkah: <span id="count">0</span> <span id="who" style="color:var(--muted)"></span></p>
+<div class="note">Coba angka 97. Bandingkan jumlah langkah linear dan biner.</div>
+<h3 class="cap">Kode kedua algoritma</h3><div class="two"><div><pre><code>def linear_search(data, target):
+    for i in range(len(data)):
+        if data[i] == target:
+            return i
+    return -1</code></pre></div><div><pre><code>def binary_search(data, target):
+    kiri = 0
+    kanan = len(data) - 1
+    while kiri &lt;= kanan:
+        tengah = (kiri + kanan) // 2
+        if data[tengah] == target:
+            return tengah
+        elif data[tengah] &lt; target:
+            kiri = tengah + 1
+        else:
+            kanan = tengah - 1
+    return -1</code></pre></div></div>
+</div></section>
+
+<!-- P1 tabel -->
+<section class="slide"><div class="wrap">
+<span class="tag">Pertemuan 1</span>
+<h2>Semakin besar data, semakin besar bedanya</h2>
+<table>
+<tr><th>Jumlah data</th><th>Linear (terburuk)</th><th>Biner (terburuk)</th></tr>
+<tr><td>10</td><td>10</td><td>4</td></tr>
+<tr><td>1.000</td><td>1.000</td><td>10</td></tr>
+<tr><td>1.000.000</td><td>1.000.000</td><td>20</td></tr>
+</table>
+<p style="margin-top:16px"><b>Pengurutan:</b> bubble sort menukar dua elemen bersebelahan yang salah urutan. Selection sort memilih elemen terkecil lalu menaruhnya di depan. Keduanya mudah dipahami, tetapi lambat untuk data besar.</p>
+<div class="note">Binary search tidak bisa dipakai pada data yang belum terurut. Linear search tetap berguna untuk data kecil atau acak.</div>
+<div class="two" style="margin-top:14px"><div><pre data-out="[1, 2, 5, 9]"><code>def bubble_sort(a):
+    for i in range(len(a)):
+        for j in range(len(a) - i - 1):
+            if a[j] &gt; a[j + 1]:
+                a[j], a[j + 1] = a[j + 1], a[j]
+    return a
+
+print(bubble_sort([5, 2, 9, 1]))</code></pre></div><div><pre data-out="[1, 2, 5, 9]"><code>def selection_sort(a):
+    for i in range(len(a)):
+        kecil = i
+        for j in range(i + 1, len(a)):
+            if a[j] &lt; a[kecil]:
+                kecil = j
+        a[i], a[kecil] = a[kecil], a[i]
+    return a
+
+print(selection_sort([5, 2, 9, 1]))</code></pre></div></div>
+</div></section>
+
+<!-- P2 -->
+<section class="slide"><div class="wrap">
+<span class="tag">Pertemuan 2</span>
+<h2>Pemrograman berbasis teks dengan Python</h2>
+<div class="grid">
+<div class="card"><h3>Variabel dan tipe data</h3><code>nama = "Sari"</code><br><code>umur = 16</code></div>
+<div class="card"><h3>Input dan output</h3><code>input()</code> dan <code>print()</code></div>
+<div class="card"><h3>Percabangan</h3><code>if</code>, <code>elif</code>, <code>else</code></div>
+<div class="card"><h3>Perulangan</h3><code>for</code> dan <code>while</code></div>
+<div class="card"><h3>List</h3><code>nilai = [80, 75, 90]</code></div>
+<div class="card"><h3>Fungsi</h3><code>def hitung_rata(x):</code></div>
+</div><h3 class="cap">Keenam konsep dalam satu program</h3><pre data-out="Sari 80&#10;Sari 90"><code>nama = "Sari"            # variabel
+nilai = [80, 75, 90]     # list
+for n in nilai:          # perulangan
+    if n &gt;= 80:          # percabangan
+        print(nama, n)   # output</code></pre></div></section>
+
+<section class="slide"><div class="wrap">
+<span class="tag">Pertemuan 2</span>
+<h2>Contoh program: rekap nilai</h2>
+<pre data-out="Nilai: 80&#10;Nilai: 90&#10;Nilai: 100&#10;Rata-rata: 90.0 A"><code><span class="k">def</span> hitung_rata(daftar):
+    <span class="k">return</span> sum(daftar) / len(daftar)
+
+<span class="k">def</span> tentukan_predikat(nilai):
+    <span class="k">if</span> nilai &gt;= 90: <span class="k">return</span> <span class="s">"A"</span>
+    <span class="k">elif</span> nilai &gt;= 80: <span class="k">return</span> <span class="s">"B"</span>
+    <span class="k">elif</span> nilai &gt;= 70: <span class="k">return</span> <span class="s">"C"</span>
+    <span class="k">else</span>: <span class="k">return</span> <span class="s">"Remedial"</span>
+
+nilai_siswa = []
+<span class="k">for</span> i <span class="k">in</span> range(3):
+    nilai_siswa.append(float(input(<span class="s">"Nilai: "</span>)))
+
+rata = hitung_rata(nilai_siswa)
+print(<span class="s">"Rata-rata:"</span>, rata, tentukan_predikat(rata))</code></pre>
+<p>Tunjuk bagian mana yang berupa variabel, percabangan, perulangan, list, dan fungsi.</p>
+</div></section>
+
+<section class="slide"><div class="wrap">
+<span class="tag">Proyek mini · berpasangan</span>
+<h2>Buat aplikasi sesuai jurusanmu</h2>
+<div class="grid">
+<div class="card"><h3>TJKT / PPLG</h3>Pengecek kekuatan password</div>
+<div class="card"><h3>Akuntansi</h3>Pencatat transaksi dan saldo</div>
+<div class="card"><h3>Pemasaran</h3>Kasir dengan diskon otomatis</div>
+<div class="card"><h3>Kuliner / Perhotelan</h3>Total pesanan plus pajak</div>
+<div class="card"><h3>Teknik</h3>Konversi satuan atau biaya servis</div>
+</div>
+<div class="note" style="margin-top:14px">Syarat: ada input, satu percabangan, satu perulangan, satu list, dan satu fungsi buatanmu. Satu orang mengetik, satu orang mengarahkan, tukar peran tiap 10 menit.</div>
+<h3 class="cap">Contoh awal: kasir dengan diskon</h3><pre data-out="Total bayar: 112500.0"><code>def hitung_total(harga, jumlah, diskon):
+    total = harga * jumlah
+    if total &gt;= 100000:
+        total = total - total * diskon
+    return total
+
+print("Total bayar:", hitung_total(25000, 5, 0.1))</code></pre>
+</div></section>
+
+<!-- P3 -->
+<section class="slide"><div class="wrap">
+<span class="tag">Pertemuan 3</span>
+<h2>Tiga jenis kesalahan program</h2>
+<table>
+<tr><th>Jenis</th><th>Ciri</th><th>Contoh</th></tr>
+<tr><td>Sintaks</td><td>Program tidak mau jalan</td><td>Lupa tanda <code>:</code> setelah <code>if</code></td></tr>
+<tr><td>Runtime</td><td>Berhenti di tengah jalan</td><td>Dibagi nol, teks diubah jadi angka</td></tr>
+<tr><td>Logika</td><td>Jalan, tetapi hasil salah</td><td>Rumus rata-rata keliru</td></tr>
+</table>
+<div class="grid" style="margin-top:14px"><div><pre data-out="SyntaxError: expected &#x27;:&#x27;"><code>if umur &gt; 17
+    print("Dewasa")</code></pre></div><div><pre data-out="ZeroDivisionError: division by zero"><code>print(10 / 0)</code></pre></div><div><pre data-out="135.0  (seharusnya dibagi 3)"><code>rata = (80 + 90 + 100) / 2
+print(rata)</code></pre></div></div><h3 style="margin-top:18px">Langkah debugging</h3>
+<p>Reproduksi, baca pesan error, isolasi bagian kode, periksa nilai dengan <code>print()</code>, perbaiki satu hal, lalu uji ulang termasuk kasus ekstrem.</p>
+<pre data-out="n = 80 total = 80&#10;n = 90 total = 170&#10;n = 100 total = 270&#10;90.0"><code>total = 0
+for n in [80, 90, 100]:
+    total += n
+    print("n =", n, "total =", total)
+print(total / 3)</code></pre>
+</div></section>
+
+<section class="slide"><div class="wrap">
+<span class="tag">Bug hunt</span>
+<h2>Ketuk baris yang bermasalah (ada 3)</h2>
+<pre id="bug" style="padding:10px"></pre>
+<p id="bugmsg" class="note">Temukan 3 bug: dua kesalahan sintaks dan satu kesalahan runtime.</p>
+<button id="bugReset" class="ghost">Ulangi</button>
+<h3 class="cap">Versi yang sudah diperbaiki</h3><pre data-out="Rata-rata: 90.0&#10;0"><code>def hitung_rata(daftar):
+    if len(daftar) == 0:
+        return 0
+    total = 0
+    for n in daftar:
+        total += n
+    return total / len(daftar)
+
+print("Rata-rata:", hitung_rata([80, 90, 100]))
+print(hitung_rata([]))</code></pre>
+</div></section>
+
+<section class="slide"><div class="wrap">
+<span class="tag">Pertemuan 3</span>
+<h2>Tangani error dengan try-except</h2>
+<pre data-out="Umur: abc&#10;Masukkan angka saja, ya!"><code><span class="k">try</span>:
+    umur = int(input(<span class="s">"Umur: "</span>))
+    print(<span class="s">"Tahun lahir kira-kira:"</span>, 2026 - umur)
+<span class="k">except</span> ValueError:
+    print(<span class="s">"Masukkan angka saja, ya!"</span>)</code></pre>
+<div class="note">Uji aplikasimu dengan input aneh: huruf pada kolom angka, angka negatif, dan input kosong. Bug yang kamu temukan lebih dulu, tidak akan ditemukan pengguna.</div>
+</div></section>
+
+<section class="slide"><div class="wrap">
+<span class="tag">Kecerdasan Artifisial</span>
+<h2>KA bisa menulis kode. Siapa yang menguji?</h2>
+<p>Sistem KA tersusun dari algoritma, dan efisiensinya perlu dibandingkan. Kode buatan KA tetap harus dibaca, diuji, dan di-debug oleh manusia.</p>
+<div class="note">Diskusi: jika asisten KA bisa menulis kode, mengapa kita tetap perlu paham algoritma dan debugging?</div>
+<h3 class="cap">Contoh: chatbot sederhana berbasis aturan</h3><pre data-out="Halo juga!&#10;Cek nilaimu di rapor ya."><code>def balas(pesan):
+    pesan = pesan.lower()
+    if "halo" in pesan:
+        return "Halo juga!"
+    elif "nilai" in pesan:
+        return "Cek nilaimu di rapor ya."
+    else:
+        return "Maaf, aku belum paham."
+
+print(balas("Halo kak"))
+print(balas("Berapa NILAI saya?"))</code></pre>
+</div></section>
+
+<!-- Kuis -->
+<section class="slide"><div class="wrap">
+<span class="tag">Kuis akhir</span>
+<div id="quiz"></div>
+</div></section>
+
+<div id="nav"><button id="prev" class="ghost">Sebelumnya</button><span id="pos"></span><button id="next">Berikutnya</button></div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];let i=0;
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+document.getElementById('bar').style.width=((i+1)/slides.length*100)+'%';
+document.getElementById('pos').textContent=(i+1)+' / '+slides.length;
+document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===slides.length-1;}
+document.getElementById('prev').onclick=()=>show(i-1);
+document.getElementById('next').onclick=()=>show(i+1);
+document.addEventListener('keydown',e=>{if(e.target.tagName==='SELECT')return;
+if(e.key==='ArrowRight'||e.key==='PageDown')show(i+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1);});
+show(0);
+
+// kartu balik
+document.querySelectorAll('.flip').forEach(c=>{const t=()=>c.classList.toggle('open');
+c.onclick=t;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();t();}};});
+
+// demo pencarian
+const data=[3,7,12,18,25,31,40,46,52,59,64,71,78,85,91,97];
+const boxes=document.getElementById('boxes'),sel=document.getElementById('target'),cnt=document.getElementById('count'),who=document.getElementById('who');
+data.forEach(v=>{boxes.insertAdjacentHTML('beforeend','<div class="box">'+v+'</div>');sel.insertAdjacentHTML('beforeend','<option>'+v+'</option>');});
+const bx=[...boxes.children];let timer=[];
+function clearDemo(){timer.forEach(clearTimeout);timer=[];bx.forEach(b=>b.className='box');cnt.textContent=0;}
+function play(steps,name){clearDemo();who.textContent='('+name+')';
+steps.forEach((st,k)=>timer.push(setTimeout(()=>{
+bx.forEach((b,j)=>{b.className='box'+(st.out&&st.out.includes(j)?' out':'')});
+bx[st.idx].classList.add(st.hit?'hit':'cur');cnt.textContent=k+1;},k*550)));}
+document.getElementById('runLin').onclick=()=>{const t=+sel.value,s=[];
+for(let j=0;j<data.length;j++){const prev=data.map((_,x)=>x).filter(x=>x<j);s.push({idx:j,out:prev,hit:data[j]===t});if(data[j]===t)break;}play(s,'linear');};
+document.getElementById('runBin').onclick=()=>{const t=+sel.value,s=[];let l=0,r=data.length-1;
+while(l<=r){const m=(l+r)>>1,out=data.map((_,x)=>x).filter(x=>x<l||x>r);s.push({idx:m,out,hit:data[m]===t});
+if(data[m]===t)break;if(data[m]<t)l=m+1;else r=m-1;}play(s,'biner');};
+
+// bug hunt
+const code=['def hitung_rata(daftar)','    total = 0','    for n in daftar:','        total += n','    return total / len(daftar)','print("Rata-rata:" hitung_rata([80, 90, 100]))','print(hitung_rata([]))'];
+const bugs={0:'Benar! Kurang tanda titik dua (:) pada def. Ini kesalahan sintaks.',5:'Benar! Kurang koma antara teks dan pemanggilan fungsi. Ini kesalahan sintaks.',6:'Benar! List kosong membuat len() bernilai 0, sehingga terjadi pembagian dengan nol. Ini kesalahan runtime.'};
+const bugEl=document.getElementById('bug'),bugMsg=document.getElementById('bugmsg');let foundN=0;
+function buildBug(){foundN=0;bugEl.innerHTML='';bugMsg.textContent='Temukan 3 bug: dua kesalahan sintaks dan satu kesalahan runtime.';
+code.forEach((t,n)=>{const b=document.createElement('button');b.className='line';b.textContent=t;
+b.onclick=()=>{if(b.classList.contains('found')||b.classList.contains('miss'))return;
+if(n in bugs){b.classList.add('found');foundN++;bugMsg.textContent=bugs[n]+(foundN===3?' Semua bug ditemukan!':'');}
+else{b.classList.add('miss');bugMsg.textContent='Baris ini sudah benar. Coba baris lain.';}};bugEl.appendChild(b);});}
+document.getElementById('bugReset').onclick=buildBug;buildBug();
+
+// kuis
+const Q=[
+{q:'Algoritma mana yang tepat untuk mencari nama di daftar 500 siswa yang sudah urut abjad?',o:['Linear search','Binary search','Bubble sort','Selection sort'],a:1,e:'Data sudah terurut, jadi binary search jauh lebih sedikit langkahnya.'},
+{q:'Untuk 1.000 data terurut, binary search butuh paling banyak sekitar berapa langkah?',o:['10','100','500','1.000'],a:0,e:'Setiap langkah membagi area pencarian dua, sehingga sekitar 10 langkah.'},
+{q:'Struktur Python yang dipakai untuk menyimpan banyak nilai sekaligus adalah…',o:['Variabel tunggal','List','Komentar','Fungsi'],a:1,e:'List menyimpan banyak data, misalnya nilai = [80, 75, 90].'},
+{q:'Apa fungsi utama membuat fungsi (def) dalam program?',o:['Memperlambat program','Mengelompokkan kode agar bisa dipakai ulang','Menghapus variabel','Menampilkan error'],a:1,e:'Fungsi mengelompokkan kode sehingga dapat dipanggil berulang kali.'},
+{q:'Program berjalan sampai selesai tetapi rata-rata dari 80, 90, 100 tercetak 270. Jenis kesalahannya…',o:['Sintaks','Runtime','Logika','Tidak ada kesalahan'],a:2,e:'Program tidak error tetapi hasilnya salah, itulah kesalahan logika (lupa dibagi jumlah data).'},
+{q:'Langkah pertama yang paling tepat saat menemukan bug adalah…',o:['Menghapus semua kode','Mereproduksi kesalahan dan membaca pesan error','Mengganti komputer','Menebak sambil mengubah banyak baris'],a:1,e:'Pastikan bug bisa diulang, lalu baca pesan error dan nomor barisnya.'},
+{q:'Apa keluaran dari <code>print(7 // 2)</code>?',o:['3.5','4','3','2'],a:2,e:'Operator // adalah pembagian bulat: 7 dibagi 2 = 3 sisa 1.'},
+{q:'Berapa kali perulangan berjalan pada <code>for i in range(4):</code>?',o:['3','5','Tak terhingga','4'],a:3,e:'range(4) menghasilkan 0, 1, 2, 3, jadi 4 kali.'},
+{q:'Apa keluaran dari <code>def kali(a, b): return a * b</code> lalu <code>print(kali(3, 4))</code>?',o:['12','7','34','Error'],a:0,e:'Fungsi mengembalikan a * b = 3 * 4 = 12.'}];
+const quiz=document.getElementById('quiz');let qi=0,score=0;
+function renderQ(){const d=Q[qi];quiz.innerHTML='<h2>Soal '+(qi+1)+' dari '+Q.length+'</h2><p><b>'+d.q+'</b></p>';
+d.o.forEach((t,n)=>{const b=document.createElement('button');b.className='opt';b.textContent=t;
+b.onclick=()=>{[...quiz.querySelectorAll('.opt')].forEach((x,k)=>{x.disabled=true;if(k===d.a)x.classList.add('ok');});
+if(n===d.a)score++;else b.classList.add('no');
+quiz.insertAdjacentHTML('beforeend','<p class="note">'+(n===d.a?'Tepat! ':'Belum tepat. ')+d.e+'</p>');
+const nx=document.createElement('button');nx.textContent=qi<Q.length-1?'Soal berikutnya':'Lihat hasil';
+nx.onclick=()=>{qi++;qi<Q.length?renderQ():result();};quiz.appendChild(nx);};quiz.appendChild(b);});}
+function result(){const p=Math.round(score/Q.length*100);
+quiz.innerHTML='<h2>Hasil kuismu</h2><div class="big">'+p+'</div><p>Kamu menjawab benar '+score+' dari '+Q.length+' soal. '+
+(p>=80?'Sangat baik, kamu siap membuat aplikasi.':p>=60?'Baik. Ulangi bagian yang masih ragu.':'Ayo ulangi materinya, lalu coba kuis lagi.')+'</p><button id="again">Ulangi kuis</button>';
+document.getElementById('again').onclick=()=>{qi=0;score=0;renderQ();};}
+renderQ();
+function hl(t){t=t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+return t.replace(/(#.*$)|("[^"\n]*")|\b(def|return|if|elif|else|for|while|in|try|except|break|and|or|not|True|False|print|input|int|float|len|range|sum|type)\b/gm,(m,c,q,k)=>c?'<span class="c">'+c+'</span>':q?'<span class="s">'+q+'</span>':'<span class="k">'+k+'</span>');}
+document.querySelectorAll('pre > code').forEach(c=>{c.innerHTML=hl(c.textContent);});
+document.querySelectorAll('pre[data-out]').forEach(p=>{const b=document.createElement('button');b.className='ghost';b.textContent='Lihat keluaran';
+const r=document.createElement('pre');r.className='res';r.hidden=true;r.textContent=p.dataset.out;
+b.onclick=()=>{r.hidden=!r.hidden;b.textContent=r.hidden?'Lihat keluaran':'Sembunyikan keluaran';};p.after(b,r);});
+</script>
+</body>
+</html>
